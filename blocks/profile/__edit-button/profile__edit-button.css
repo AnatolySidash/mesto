@@ -1,0 +1,10 @@
+.profile__edit-button {
+  display: inline-block;
+  margin-left: 18px;
+  cursor: pointer;
+  transition: opacity .3s ease-in-out;
+}
+
+.profile__edit-button:hover {
+  opacity: 0.6;
+}

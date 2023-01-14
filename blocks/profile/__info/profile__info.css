@@ -1,3 +1,5 @@
 .profile__info {
-  padding-right: 250px;
+  display: grid;
+  grid-template-columns: 288px 24px;
+  column-gap: 18px;
 }

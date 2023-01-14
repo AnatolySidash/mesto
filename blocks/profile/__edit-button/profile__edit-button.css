@@ -1,6 +1,6 @@
 .profile__edit-button {
   display: inline-block;
-  margin-left: 18px;
+  padding-top: 15px;
   cursor: pointer;
   transition: opacity .3s ease-in-out;
 }

@@ -1,4 +1,5 @@
 .profile__name {
+  min-width: 288px;
   padding: 0;
   margin: 0 0 7px;
   font-style: normal;
@@ -12,4 +13,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__name {
+    font-size: 35px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile__name {
+    min-width: 253px;
+    font-size: 27px;
+    line-height: 33px;
+  }
 }

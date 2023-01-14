@@ -1,5 +1,16 @@
 .profile__info {
-  display: grid;
-  grid-template-columns: 288px 24px;
-  column-gap: 18px;
+  min-width: 288px;
+  max-width: 880px;
+}
+
+@media screen and (max-width: 500px) {
+  .profile__info {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile__info {
+    min-width: 253px;
+  }
 }

@@ -8,4 +8,4 @@
 2. Добавить функцию выставления оценки
 3. Добавить функцию добавления комментариев
 
-Ссылка на Github Pages:
+Ссылка на Github Pages: https://anatolysidash.github.io/mesto/

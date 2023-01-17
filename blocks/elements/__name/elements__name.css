@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 28px 21px 31px;
+  padding: 25px 21px 31px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

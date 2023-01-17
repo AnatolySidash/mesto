@@ -20,13 +20,20 @@
 
 @media screen and (max-width: 768px) {
   .profile__name {
-    font-size: 35px;
+    min-width: 250px;
+    font-size: 32px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile__name {
+    text-align: center;
   }
 }
 
 @media screen and (max-width: 320px) {
   .profile__name {
-    min-width: 245px;
+    min-width: 242px;
     font-size: 27px;
     line-height: 33px;
   }

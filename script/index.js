@@ -38,6 +38,9 @@ function handleFormSubmit(event) {
 
 editButton.addEventListener('click', function () {
   popupOpen();
+
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
 });
 
 closeButton.addEventListener('click', function () {

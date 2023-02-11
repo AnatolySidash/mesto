@@ -30,66 +30,12 @@
 
     <section class="elements">
       <ul class="elements__list">
-        <li class="elements__item">
-          <img src="./images/03_elements/karachay.jpg"
-            alt="Астрофизическая обсерватория на высокогорье недалеко от курорта Архыз. Большой телескоп в здании сферической формы."
-            class="elements__image">
-          <div class="elements__name">
-            <h2 class="elements__title">Архыз</h2>
-            <button type="button" class="elements__like-icon"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img src="./images/03_elements/elbrus.jpg"
-            alt="Группа альпинистов поднимается по заснеженному склону горы Эльбрус. На фоне видна гряда Кавказских гор под чистым голубым небом."
-            class="elements__image">
-          <div class="elements__name">
-            <h2 class="elements__title">Гора Эльбрус</h2>
-            <button type="button" class="elements__like-icon"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img src="./images/03_elements/dombay.jpg"
-            alt="Двое лыжников поднимаютмя на подъёмнике на склоны гор Домбая. Под их ногами лежат склоны с заснеженным хвойным лесом."
-            class="elements__image">
-          <div class="elements__name">
-            <h2 class="elements__title">Домбай</h2>
-            <button type="button" class="elements__like-icon"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img src="./images/03_elements/elbrus_2.jpg"
-            alt="Путешественник стоит в предгорье и смотрит на главный пик Эльбруса, который полностью укрыт снежной шапкой."
-            class="elements__image">
-          <div class="elements__name">
-            <h2 class="elements__title">Гора Эльбрус</h2>
-            <button type="button" class="elements__like-icon"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img src="./images/03_elements/vladivostok.jpg"
-            alt="На фото изображен Токаревский маяк в городе Владивостоке. Расположен на южной точке кошки Токаревского, обеспечивает проход судов в узости пролива Босфор Восточный. Представляет собой высокую белую башню круглой формы с красной крышей."
-            class="elements__image">
-          <div class="elements__name">
-            <h2 class="elements__title">Владивосток</h2>
-            <button type="button" class="elements__like-icon"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img src="./images/03_elements/karachay_2.jpg"
-            alt="На фото изображена горная гряда в Карачаево-Черкесии. Облака плывут ниже вершины над долиной между горными пиками."
-            class="elements__image">
-          <div class="elements__name">
-            <h2 class="elements__title">Карачаево-Черкесия</h2>
-            <button type="button" class="elements__like-icon"></button>
-          </div>
-        </li>
       </ul>
     </section>
 
   </main>
 
-  <section class="popup">
+  <section class="popup popup_edit">
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
@@ -101,9 +47,33 @@
     </div>
   </section>
 
+  <section class="popup popup_add">
+    <div class="popup__container">
+      <button type="button" class="popup__close"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form name="profile_form" class="popup__form">
+        <input name="name_input" type="text" class="popup__input popup__input_type_name" placeholder="Название"
+          value="">
+        <input name="job_input" type="text" class="popup__input popup__input_type_job" placeholder="Ссылка на картинку"
+          value="">
+        <button type="submit" class="popup__button">Сохранить</button>
+      </form>
+    </div>
+  </section>
+
   <footer class="footer">
     <p class="footer__text">© 2020 Mesto Russia</p>
   </footer>
+
+  <template id="card-template">
+    <li class="elements__item">
+      <img src="" class="elements__image">
+      <div class="elements__name">
+        <h2 class="elements__title"></h2>
+        <button type="button" class="elements__like-icon"></button>
+      </div>
+    </li>
+  </template>
 
   <script src="./script/index.js"></script>
 </body>

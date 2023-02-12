@@ -4,8 +4,12 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const popupEdit = document.querySelector('.popup_edit');
 const popupAdd = document.querySelector('.popup_add');
+const popupImage = document.querySelector('.popup_image');
+
 const closeEditPopupButton = popupEdit.querySelector('.popup__close');
 const closeAddPopupButton = popupAdd.querySelector('.popup__close');
+const closeImagePopupButton = popupImage.querySelector('.popup__close');
+
 const formElement = document.querySelector('.popup__form');
 const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');
@@ -13,29 +17,47 @@ const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__description');
 const addCardButton = popupAdd.querySelector('.popup__button');
 
+const template = document.querySelector('#card-template').content.querySelector('.elements__item');
+const cardList = document.querySelector('.elements__list');
+const cardNameInput = popupAdd.querySelector('.popup__input_type_name');
+const cardImageLink = popupAdd.querySelector('.popup__input_type_job');
+
+
 
 // Функция открытия модального окна редактирования профиля
 
-function editPopupOpen() {
+function openEditPopup() {
   popupEdit.classList.add('popup_opened');
+}
+
+// Функция закрытия модального окна редактирования профиля
+
+function closeEditPopup() {
+  popupEdit.classList.remove('popup_opened');
 }
 
 // Функция открытия модального окна добавления карточки
 
-function addPopupOpen() {
+function openAddPopup() {
   popupAdd.classList.add('popup_opened');
 }
 
-// Функция закрытия модального окна редактирования профиля
+// Функция закрытия модального окна добавления карточки
 
-function editPopupClose() {
-  popupEdit.classList.remove('popup_opened');
+function closeAddPopup() {
+  popupAdd.classList.remove('popup_opened');
 }
 
-// Функция закрытия модального окна редактирования профиля
+// Функция открытия модального окна увеличенного изображения
 
-function addPopupClose() {
-  popupAdd.classList.remove('popup_opened');
+function openImagePopup() {
+  popupImage.classList.add('popup_opened');
+}
+
+// Функция закрытия модального окна увеличенного изображения
+
+function closeImagePopup() {
+  popupImage.classList.remove('popup_opened');
 }
 
 // Функция изменения имени пользователя и описания профессии пользователя
@@ -46,33 +68,33 @@ function handleFormSubmit(event) {
   profileName.textContent = nameInput.value;   // Передаём значение из поля ввода имени пользователя в профиль пользователя на странице HTML
   profileJob.textContent = jobInput.value;   // Передаём значение из поля ввода описания в профиль пользователя на странице HTML
 
-  editPopupClose();   // Закрываем модальное окно
+  closeEditPopup();   // Закрываем модальное окно
 }
 
 // Открытие и закрытие модального окна редактирования профиля
 
 editButton.addEventListener('click', function () {
-  editPopupOpen();
+  openEditPopup();
 
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 });
 
 closeEditPopupButton.addEventListener('click', function () {
-  editPopupClose();
+  closeEditPopup();
 });
 
 // Открытие и закрытие модального окна добавления карточки
 
 addButton.addEventListener('click', function () {
-  addPopupOpen();
+  openAddPopup();
 
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 });
 
 closeAddPopupButton.addEventListener('click', function () {
-  addPopupClose();
+  closeAddPopup();
 });
 
 
@@ -110,20 +132,37 @@ const initialCards = [
 ];
 
 
-// Константы
-
-const template = document.querySelector('#card-template').content.querySelector('.elements__item');
-const cardList = document.querySelector('.elements__list');
-const cardNameInput = popupAdd.querySelector('.popup__input_type_name');
-const cardImageLink = popupAdd.querySelector('.popup__input_type_job');
-
 // Функция создания карточки
 
 function createCard(item) {
   const card = template.cloneNode(true);
+  const likeButton = card.querySelector('.elements__like-icon');
+  const deleteButton = card.querySelector('.elements__delete-icon');
+  const cardImage = card.querySelector('.elements__image');
+
   card.querySelector('.elements__title').textContent = item.name;
   card.querySelector('.elements__image').src = item.link;
   card.querySelector('.elements__image').alt = item.name;
+
+  likeButton.addEventListener('click', function () {
+    likeButton.classList.toggle('elements__like-icon_active');
+  });
+
+  deleteButton.addEventListener('click', function () {
+    card.remove();
+  });
+
+  cardImage.addEventListener('click', function () {
+    openImagePopup();
+
+    popupImage.querySelector('.popup__photo').src = item.link;
+    popupImage.querySelector('.popup__photo').alt = item.name;
+    popupImage.querySelector('.popup__name').textContent = item.name;
+  });
+
+  closeImagePopupButton.addEventListener('click', function () {
+    closeImagePopup();
+  });
 
   return card;
 }
@@ -139,7 +178,6 @@ function renderCards() {
 
 renderCards();
 
-
 // Добавление новой карточки на страницу
 
 addCardButton.addEventListener('click', function (event) {
@@ -150,6 +188,7 @@ addCardButton.addEventListener('click', function (event) {
   const card = createCard({ name: title, link: image });
 
   cardList.prepend(card);
-  addPopupClose();
+  closeAddPopup();
+
 });
 

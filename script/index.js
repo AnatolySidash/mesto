@@ -6,16 +6,12 @@ const popupEdit = document.querySelector('.popup_edit');
 const popupAdd = document.querySelector('.popup_add');
 const popupImage = document.querySelector('.popup_image');
 
-const closeEditPopupButton = popupEdit.querySelector('.popup__close');
-const closeAddPopupButton = popupAdd.querySelector('.popup__close');
-const closeImagePopupButton = popupImage.querySelector('.popup__close');
-
 const formElement = document.querySelector('.popup__form');
+const formAdd = popupAdd.querySelector('.popup__form');
 const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__description');
-const addCardButton = popupAdd.querySelector('.popup__button');
 
 const template = document.querySelector('#card-template').content.querySelector('.elements__item');
 const cardList = document.querySelector('.elements__list');
@@ -23,41 +19,16 @@ const cardNameInput = popupAdd.querySelector('.popup__input_type_name');
 const cardImageLink = popupAdd.querySelector('.popup__input_type_job');
 
 
+// Функция открытия модального окна
 
-// Функция открытия модального окна редактирования профиля
-
-function openEditPopup() {
-  popupEdit.classList.add('popup_opened');
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
 }
 
-// Функция закрытия модального окна редактирования профиля
+// Функция закрытия модального окна
 
-function closeEditPopup() {
-  popupEdit.classList.remove('popup_opened');
-}
-
-// Функция открытия модального окна добавления карточки
-
-function openAddPopup() {
-  popupAdd.classList.add('popup_opened');
-}
-
-// Функция закрытия модального окна добавления карточки
-
-function closeAddPopup() {
-  popupAdd.classList.remove('popup_opened');
-}
-
-// Функция открытия модального окна увеличенного изображения
-
-function openImagePopup() {
-  popupImage.classList.add('popup_opened');
-}
-
-// Функция закрытия модального окна увеличенного изображения
-
-function closeImagePopup() {
-  popupImage.classList.remove('popup_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
 // Функция изменения имени пользователя и описания профессии пользователя
@@ -68,35 +39,35 @@ function handleFormSubmit(event) {
   profileName.textContent = nameInput.value;   // Передаём значение из поля ввода имени пользователя в профиль пользователя на странице HTML
   profileJob.textContent = jobInput.value;   // Передаём значение из поля ввода описания в профиль пользователя на странице HTML
 
-  closeEditPopup();   // Закрываем модальное окно
+  closePopup(popupEdit);   // Закрываем модальное окно
 }
 
-// Открытие и закрытие модального окна редактирования профиля
+// Открытие модального окна редактирования профиля
 
 editButton.addEventListener('click', function () {
-  openEditPopup();
+  openPopup(popupEdit);
 
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 });
 
-closeEditPopupButton.addEventListener('click', function () {
-  closeEditPopup();
-});
-
-// Открытие и закрытие модального окна добавления карточки
+// Открытие модального окна добавления карточки
 
 addButton.addEventListener('click', function () {
-  openAddPopup();
-
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
+  openPopup(popupAdd);
 });
 
-closeAddPopupButton.addEventListener('click', function () {
-  closeAddPopup();
-});
+// Закрытие модальных окон
 
+// находим все крестики проекта по универсальному селектору
+const closeButtons = document.querySelectorAll('.popup__close');
+
+closeButtons.forEach((button) => {
+  // находим 1 раз ближайший к крестику попап
+  const popup = button.closest('.popup');
+  // устанавливаем обработчик закрытия на крестик
+  button.addEventListener('click', () => closePopup(popup));
+});
 
 // Передача новых данных в профиль
 
@@ -131,7 +102,6 @@ const initialCards = [
   }
 ];
 
-
 // Функция создания карточки
 
 function createCard(item) {
@@ -153,15 +123,11 @@ function createCard(item) {
   });
 
   cardImage.addEventListener('click', function () {
-    openImagePopup();
+    openPopup(popupImage);
 
     popupImage.querySelector('.popup__photo').src = item.link;
     popupImage.querySelector('.popup__photo').alt = item.name;
     popupImage.querySelector('.popup__name').textContent = item.name;
-  });
-
-  closeImagePopupButton.addEventListener('click', function () {
-    closeImagePopup();
   });
 
   return card;
@@ -180,7 +146,7 @@ renderCards();
 
 // Добавление новой карточки на страницу
 
-addCardButton.addEventListener('click', function (event) {
+formAdd.addEventListener('submit', function (event) {
   event.preventDefault();
 
   const title = cardNameInput.value;
@@ -188,7 +154,7 @@ addCardButton.addEventListener('click', function (event) {
   const card = createCard({ name: title, link: image });
 
   cardList.prepend(card);
-  closeAddPopup();
-
+  closePopup(popupAdd);
+  event.target.reset();
 });
 

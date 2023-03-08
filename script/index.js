@@ -7,6 +7,7 @@ const popupAdd = document.querySelector('.popup_add');
 const popupImage = document.querySelector('.popup_image');
 
 const formElement = document.querySelector('.popup__form');
+const inputElement = formElement.querySelector('.popup__input');
 const formAdd = popupAdd.querySelector('.popup__form');
 const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');

@@ -18,6 +18,10 @@
   opacity: 0.8;
 }
 
+.popup__button:disabled:hover {
+  opacity: 0.2;
+}
+
 @media screen and (max-width: 550px) {
   .popup__button {
     padding-left: 80px;

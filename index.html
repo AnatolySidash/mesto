@@ -40,12 +40,12 @@
       <button type="button" class="popup__close"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form name="profile_form" class="popup__form" novalidate>
-        <input id="name__input" name="name_input" type="text" class="popup__input popup__input_type_name"
-          placeholder="Имя" value="" minlength="2" maxlength="40" required>
-        <span class="popup__input-error-name name__input-error"></span>
-        <input id="job__input" name="job_input" type="text" class="popup__input popup__input_type_job"
-          placeholder="О себе" value="" minlength="2" maxlength="200" required>
-        <span class="popup__input-error-name job__input-error"></span>
+        <input id="name__input" name="name" type="text" class="popup__input popup__input_type_name" placeholder="Имя"
+          value="" minlength="2" maxlength="40" required>
+        <span class="popup__input-error popup__input-error_type_name"></span>
+        <input id="job__input" name="job" type="text" class="popup__input popup__input_type_job" placeholder="О себе"
+          value="" minlength="2" maxlength="200" required>
+        <span class="popup__input-error popup__input-error_type_job"></span>
         <button type="submit" class="popup__button">Сохранить</button>
       </form>
     </div>
@@ -56,12 +56,12 @@
       <button type="button" class="popup__close"></button>
       <h2 class="popup__title">Новое место</h2>
       <form name="card_form" class="popup__form" novalidate>
-        <input id="place__input" name="place_input" type="text" class="popup__input popup__input_type_name"
+        <input id="place__input" name="place" type="text" class="popup__input popup__input_type_name"
           placeholder="Название" value="" minlength="2" maxlength="30" required>
-        <span class="popup__input-error-name place__input-error"></span>
-        <input id="link__input" name="link_input" type="url" class="popup__input popup__input_type_job"
+        <span class="popup__input-error popup__input-error_type_place"></span>
+        <input id="link__input" name="link" type="url" class="popup__input popup__input_type_job"
           placeholder="Ссылка на картинку" value="" required>
-        <span class="popup__input-error-name link__input-error"></span>
+        <span class="popup__input-error popup__input-error_type_link"></span>
         <button type="submit" class="popup__button">Сохранить</button>
       </form>
     </div>

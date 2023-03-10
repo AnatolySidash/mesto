@@ -37,6 +37,8 @@ function enableButton(submitButton, disabledButtonClass) {
   submitButton.disabled = false;
 }
 
+// Функция проверки валидности данных во всех полях ввода
+
 function hasInvalidInput(inputList) {
   return Array.from(inputList).some(function (input) {
     return !input.validity.valid;
@@ -55,10 +57,11 @@ function toggleButtonState(submitButton, disabledButtonClass, inputList) {
 
 // Функция добавления слушателя на форму и на поля ввода в форме
 
-function setEventListeners(form, inputList, errorClassTemplate, activeErrorClass, disabledButtonClass, submitButton) {
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    submitButton.disabled = true;
+function setEventListeners(formList, inputList, errorClassTemplate, activeErrorClass, disabledButtonClass, submitButton) {
+  formList.forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+    });
   });
 
   inputList.forEach(function (input) {
@@ -67,23 +70,27 @@ function setEventListeners(form, inputList, errorClassTemplate, activeErrorClass
       toggleButtonState(submitButton, disabledButtonClass, inputList);
     });
   });
+
+  console.log(submitButton);
 }
 
 // Функция включения валидации формы
 
 function enableValidation(config) {
-  const form = document.querySelector(config.formSelector);
-  const inputList = form.querySelectorAll(config.inputSelector);
-  const submitButton = form.querySelector(config.submitButtonSelector);
+  const formList = document.querySelectorAll(config.formSelector);
+  const inputList = document.querySelectorAll(config.inputSelector);
+  const submitButton = document.querySelector(config.submitButtonSelector);
 
-  setEventListeners(form, inputList, config.errorClassTemplate, config.activeErrorClass, config.disabledButtonClass, submitButton);
+  setEventListeners(formList, inputList, config.errorClassTemplate, config.activeErrorClass, config.disabledButtonClass, submitButton);
 }
 
-enableValidation({
+const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   disabledButtonClass: 'popup__button_disabled',
   errorClassTemplate: '.popup__input-error_type_',
   activeErrorClass: 'popup__input-error',
-});
+};
+
+enableValidation(validationConfig);

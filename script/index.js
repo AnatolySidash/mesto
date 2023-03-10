@@ -18,12 +18,15 @@ const template = document.querySelector('#card-template').content.querySelector(
 const cardList = document.querySelector('.elements__list');
 const cardNameInput = popupAdd.querySelector('.popup__input_type_name');
 const cardImageLink = popupAdd.querySelector('.popup__input_type_job');
+const config = validationConfig;
+const submitButton = document.querySelector(config.submitButtonSelector);
 
 
 // Функция открытия модального окна
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  disableButton(submitButton, config.disabledButtonClass);
 }
 
 // Функция закрытия модального окна
@@ -40,6 +43,7 @@ function handleFormSubmit(event) {
   profileName.textContent = nameInput.value;   // Передаём значение из поля ввода имени пользователя в профиль пользователя на странице HTML
   profileJob.textContent = jobInput.value;   // Передаём значение из поля ввода описания в профиль пользователя на странице HTML
 
+  event.target.reset();
   closePopup(popupEdit);   // Закрываем модальное окно
 }
 
@@ -158,4 +162,3 @@ formAdd.addEventListener('submit', function (event) {
   closePopup(popupAdd);
   event.target.reset();
 });
-

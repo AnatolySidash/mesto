@@ -26,7 +26,6 @@ const submitButton = document.querySelector(config.submitButtonSelector);
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  disableButton(submitButton, config.disabledButtonClass);
 }
 
 // Функция закрытия модального окна
@@ -43,7 +42,6 @@ function handleFormSubmit(event) {
   profileName.textContent = nameInput.value;   // Передаём значение из поля ввода имени пользователя в профиль пользователя на странице HTML
   profileJob.textContent = jobInput.value;   // Передаём значение из поля ввода описания в профиль пользователя на странице HTML
 
-  event.target.reset();
   closePopup(popupEdit);   // Закрываем модальное окно
 }
 
@@ -62,7 +60,7 @@ addButton.addEventListener('click', function () {
   openPopup(popupAdd);
 });
 
-// Закрытие модальных окон
+// Закрытие модальных окон по нажатию на крестик
 
 // находим все крестики проекта по универсальному селектору
 const closeButtons = document.querySelectorAll('.popup__close');
@@ -73,6 +71,31 @@ closeButtons.forEach((button) => {
   // устанавливаем обработчик закрытия на крестик
   button.addEventListener('click', () => closePopup(popup));
 });
+
+// Закрытие модальных окон по кнопке ESCAPE
+
+document.addEventListener('keydown', function (event) {
+  const popupList = document.querySelectorAll('.popup');
+
+  popupList.forEach(function (popup) {
+    if (event.key === "Escape") {
+      closePopup(popup);
+    }
+  });
+});
+
+// Закрытие модальных окон по клику на OVERLAY
+
+document.addEventListener('click', function (event) {
+  const popupList = document.querySelectorAll('.popup');
+
+  popupList.forEach(function (popup) {
+    if (event.target === popup) {
+      closePopup(popup);
+    }
+  });
+});
+
 
 // Передача новых данных в профиль
 

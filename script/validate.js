@@ -48,6 +48,7 @@ function hasInvalidInput(inputList) {
 // Функция активации/деактивации кнопки при валидации
 
 function toggleButtonState(submitButton, disabledButtonClass, inputList) {
+
   if (!hasInvalidInput(inputList)) {
     enableButton(submitButton, disabledButtonClass);
   } else {
@@ -58,10 +59,8 @@ function toggleButtonState(submitButton, disabledButtonClass, inputList) {
 // Функция добавления слушателя на форму и на поля ввода в форме
 
 function setEventListeners(formList, inputList, errorClassTemplate, activeErrorClass, disabledButtonClass, submitButton) {
-  formList.forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-    });
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
   });
 
   inputList.forEach(function (input) {
@@ -70,16 +69,17 @@ function setEventListeners(formList, inputList, errorClassTemplate, activeErrorC
       toggleButtonState(submitButton, disabledButtonClass, inputList);
     });
   });
-
-  console.log(submitButton);
 }
 
 // Функция включения валидации формы
 
 function enableValidation(config) {
-  const formList = document.querySelectorAll(config.formSelector);
-  const inputList = document.querySelectorAll(config.inputSelector);
-  const submitButton = document.querySelector(config.submitButtonSelector);
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+
+  formList.forEach(function (form) {
+    const inputList = Array.from(form.querySelectorAll(config.inputSelector));
+    const submitButton = form.querySelector(config.submitButtonSelector);
+  });
 
   setEventListeners(formList, inputList, config.errorClassTemplate, config.activeErrorClass, config.disabledButtonClass, submitButton);
 }

@@ -7,6 +7,8 @@ const popupAdd = document.querySelector('.popup_add');
 const popupImage = document.querySelector('.popup_image');
 
 const formElement = document.querySelector('.popup__form');
+const profileForm = document.querySelector('.popup__form_type_edit');
+const cardForm = document.querySelector('.popup__form_type_add');
 const inputElement = formElement.querySelector('.popup__input');
 const formAdd = popupAdd.querySelector('.popup__form');
 const nameInput = formElement.querySelector('.popup__input_type_name');
@@ -19,7 +21,8 @@ const cardList = document.querySelector('.elements__list');
 const cardNameInput = popupAdd.querySelector('.popup__input_type_name');
 const cardImageLink = popupAdd.querySelector('.popup__input_type_job');
 const config = validationConfig;
-const submitButton = document.querySelector(config.submitButtonSelector);
+const submitButtonEdit = document.querySelector('.popup__button_type_edit');
+const submitButtonAdd = document.querySelector('.popup__button_type_add');
 
 
 // Функция открытия модального окна
@@ -43,21 +46,26 @@ function handleFormSubmit(event) {
   profileJob.textContent = jobInput.value;   // Передаём значение из поля ввода описания в профиль пользователя на странице HTML
 
   closePopup(popupEdit);   // Закрываем модальное окно
+  event.target.reset();
 }
 
 // Открытие модального окна редактирования профиля
 
-editButton.addEventListener('click', function () {
+editButton.addEventListener('click', function (event) {
   openPopup(popupEdit);
 
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
+
+  disableButton(submitButtonEdit, config.disabledButtonClass);
 });
 
 // Открытие модального окна добавления карточки
 
-addButton.addEventListener('click', function () {
+addButton.addEventListener('click', function (event) {
   openPopup(popupAdd);
+
+  disableButton(submitButtonAdd, config.disabledButtonClass);
 });
 
 // Закрытие модальных окон по нажатию на крестик
@@ -95,6 +103,20 @@ document.addEventListener('click', function (event) {
     }
   });
 });
+
+// Функция очистки формы
+
+function resetForm(form) {
+
+  const inputList = form.querySelectorAll('.popup__input');
+
+  inputList.forEach(function (input) {
+    const errorElement = document.querySelector(`${config.errorClassTemplate}${input.name}`);
+    errorElement.textContent = '';
+    input.classList.remove('.popup__input-error');
+    input.textContent = '';
+  });
+}
 
 
 // Передача новых данных в профиль

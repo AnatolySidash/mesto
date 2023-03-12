@@ -17,7 +17,7 @@ function hideInputError(errorElement, activeErrorClass) {
 function checkInputValidity(input, errorClassTemplate, activeErrorClass) {
   const errorElement = document.querySelector(`${errorClassTemplate}${input.name}`);
   if (!input.validity.valid) {
-    showInputError(errorElement, validationMessage, activeErrorClass);
+    showInputError(errorElement, input.validationMessage, activeErrorClass);
   } else {
     hideInputError(errorElement);
   }
@@ -49,8 +49,6 @@ function hasInvalidInput(inputList) {
 
 function toggleButtonState(submitButton, disabledButtonClass, inputList) {
 
-  console.log(submitButton);
-
   if (!hasInvalidInput(inputList)) {
     enableButton(submitButton, disabledButtonClass);
   } else {
@@ -60,7 +58,7 @@ function toggleButtonState(submitButton, disabledButtonClass, inputList) {
 
 // Функция добавления слушателя на форму и на поля ввода в форме
 
-function setEventListeners(formList, config, errorClassTemplate, activeErrorClass, disabledButtonClass) {
+function setEventListeners(formList, config, disabledButtonClass, errorClassTemplate, activeErrorClass) {
 
   formList.forEach(function (form) {
     form.addEventListener('submit', function (event) {
@@ -84,7 +82,7 @@ function setEventListeners(formList, config, errorClassTemplate, activeErrorClas
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
 
-  setEventListeners(formList, config.disabledButtonClass, config.errorClassTemplate, config.activeErrorClass);
+  setEventListeners(formList, config, config.disabledButtonClass, config.errorClassTemplate, config.activeErrorClass);
 }
 
 const validationConfig = {

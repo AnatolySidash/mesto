@@ -17,7 +17,7 @@ function hideInputError(errorElement, activeErrorClass) {
 function checkInputValidity(input, errorClassTemplate, activeErrorClass) {
   const errorElement = document.querySelector(`${errorClassTemplate}${input.name}`);
   if (!input.validity.valid) {
-    showInputError(errorElement, input.validationMessage, activeErrorClass);
+    showInputError(errorElement, validationMessage, activeErrorClass);
   } else {
     hideInputError(errorElement);
   }
@@ -49,6 +49,8 @@ function hasInvalidInput(inputList) {
 
 function toggleButtonState(submitButton, disabledButtonClass, inputList) {
 
+  console.log(submitButton);
+
   if (!hasInvalidInput(inputList)) {
     enableButton(submitButton, disabledButtonClass);
   } else {
@@ -58,15 +60,21 @@ function toggleButtonState(submitButton, disabledButtonClass, inputList) {
 
 // Функция добавления слушателя на форму и на поля ввода в форме
 
-function setEventListeners(formList, inputList, errorClassTemplate, activeErrorClass, disabledButtonClass, submitButton) {
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-  });
+function setEventListeners(formList, config, errorClassTemplate, activeErrorClass, disabledButtonClass) {
 
-  inputList.forEach(function (input) {
-    input.addEventListener('input', function () {
-      checkInputValidity(input, errorClassTemplate, activeErrorClass);
-      toggleButtonState(submitButton, disabledButtonClass, inputList);
+  formList.forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+    });
+
+    const inputList = Array.from(form.querySelectorAll(config.inputSelector));
+    const submitButton = form.querySelector(config.submitButtonSelector);
+
+    inputList.forEach(function (input) {
+      input.addEventListener('input', function () {
+        checkInputValidity(input, errorClassTemplate, activeErrorClass);
+        toggleButtonState(submitButton, disabledButtonClass, inputList);
+      });
     });
   });
 }
@@ -76,12 +84,7 @@ function setEventListeners(formList, inputList, errorClassTemplate, activeErrorC
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
 
-  formList.forEach(function (form) {
-    const inputList = Array.from(form.querySelectorAll(config.inputSelector));
-    const submitButton = form.querySelector(config.submitButtonSelector);
-  });
-
-  setEventListeners(formList, inputList, config.errorClassTemplate, config.activeErrorClass, config.disabledButtonClass, submitButton);
+  setEventListeners(formList, config.disabledButtonClass, config.errorClassTemplate, config.activeErrorClass);
 }
 
 const validationConfig = {

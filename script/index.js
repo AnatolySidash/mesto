@@ -18,8 +18,8 @@ const profileJob = document.querySelector('.profile__description');
 
 const template = document.querySelector('#card-template').content.querySelector('.elements__item');
 const cardList = document.querySelector('.elements__list');
-const cardNameInput = popupAdd.querySelector('.popup__input_type_name');
-const cardImageLink = popupAdd.querySelector('.popup__input_type_job');
+const cardNameInput = popupAdd.querySelector('.popup__input_type_place');
+const cardImageLink = popupAdd.querySelector('.popup__input_type_link');
 const config = validationConfig;
 const submitButtonEdit = document.querySelector('.popup__button_type_edit');
 const submitButtonAdd = document.querySelector('.popup__button_type_add');

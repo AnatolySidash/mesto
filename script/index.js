@@ -46,7 +46,6 @@ function handleFormSubmit(event) {
   profileJob.textContent = jobInput.value;   // Передаём значение из поля ввода описания в профиль пользователя на странице HTML
 
   closePopup(popupEdit);   // Закрываем модальное окно
-  event.target.reset();
 }
 
 // Открытие модального окна редактирования профиля
@@ -58,6 +57,7 @@ editButton.addEventListener('click', function (event) {
   jobInput.value = profileJob.textContent;
 
   disableButton(submitButtonEdit, config.disabledButtonClass);
+  resetForm(profileForm);
 });
 
 // Открытие модального окна добавления карточки
@@ -65,7 +65,9 @@ editButton.addEventListener('click', function (event) {
 addButton.addEventListener('click', function (event) {
   openPopup(popupAdd);
 
+  cardForm.reset();
   disableButton(submitButtonAdd, config.disabledButtonClass);
+  resetForm(cardForm);
 });
 
 // Закрытие модальных окон по нажатию на крестик
@@ -77,7 +79,10 @@ closeButtons.forEach((button) => {
   // находим 1 раз ближайший к крестику попап
   const popup = button.closest('.popup');
   // устанавливаем обработчик закрытия на крестик
-  button.addEventListener('click', () => closePopup(popup));
+  button.addEventListener('click', function () {
+    closePopup(popup);
+  });
+
 });
 
 // Закрытие модальных окон по кнопке ESCAPE
@@ -114,6 +119,7 @@ function resetForm(form) {
     const errorElement = document.querySelector(`${config.errorClassTemplate}${input.name}`);
     errorElement.textContent = '';
     input.classList.remove('.popup__input-error');
+    input.classList.remove(config.invalidInputClass);
     input.textContent = '';
   });
 }

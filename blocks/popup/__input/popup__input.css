@@ -14,7 +14,3 @@
   outline: 2px solid #6691eb;
   border-radius: 1px;
 }
-
-.popup__input:invalid {
-  border-bottom: 1px solid #FF0000;
-}

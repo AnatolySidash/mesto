@@ -1,29 +1,25 @@
 
 // Функция включения демонстрации типа ошибки
 
-function showInputError(errorElement, validationMessage, activeErrorClass, inputElement, invalidInputClass) {
+function showInputError(errorElement, validationMessage, activeErrorClass) {
   errorElement.textContent = validationMessage;
   errorElement.classList.add(activeErrorClass);
-  inputElement.classList.add(invalidInputClass);
 }
 
 // Функция отключения демонстрации типа ошибки
 
-function hideInputError(errorElement, activeErrorClass, inputElement, invalidInputClass) {
+function hideInputError(errorElement, activeErrorClass) {
   errorElement.classList.remove(activeErrorClass);
   errorElement.textContent = '';
-  inputElement.classList.remove(invalidInputClass);
 }
 
 // Функция проверки валидности вводимых данных
-function checkInputValidity(input, errorClassTemplate, inputClassTemplate, activeErrorClass, invalidInputClass) {
+function checkInputValidity(input, errorClassTemplate, activeErrorClass) {
   const errorElement = document.querySelector(`${errorClassTemplate}${input.name}`);
-  const inputElement = document.querySelector(`${inputClassTemplate}${input.name}`);
-
   if (!input.validity.valid) {
-    showInputError(errorElement, input.validationMessage, activeErrorClass, inputElement, invalidInputClass);
+    showInputError(errorElement, input.validationMessage, activeErrorClass);
   } else {
-    hideInputError(errorElement);  // класс добавляется, но не удаляется и появляется ошибка
+    hideInputError(errorElement);
   }
 }
 
@@ -62,7 +58,7 @@ function toggleButtonState(submitButton, disabledButtonClass, inputList) {
 
 // Функция добавления слушателя на форму и на поля ввода в форме
 
-function setEventListeners(formList, config, disabledButtonClass, errorClassTemplate, activeErrorClass, inputClassTemplate, invalidInputClass) {
+function setEventListeners(formList, config, disabledButtonClass, errorClassTemplate, activeErrorClass) {
 
   formList.forEach(function (form) {
     form.addEventListener('submit', function (event) {
@@ -74,7 +70,7 @@ function setEventListeners(formList, config, disabledButtonClass, errorClassTemp
 
     inputList.forEach(function (input) {
       input.addEventListener('input', function () {
-        checkInputValidity(input, errorClassTemplate, activeErrorClass, inputClassTemplate, invalidInputClass);
+        checkInputValidity(input, errorClassTemplate, activeErrorClass);
         toggleButtonState(submitButton, disabledButtonClass, inputList);
       });
     });
@@ -86,7 +82,7 @@ function setEventListeners(formList, config, disabledButtonClass, errorClassTemp
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
 
-  setEventListeners(formList, config, config.disabledButtonClass, config.errorClassTemplate, config.inputClassTemplate, config.activeErrorClass, config.invalidInputClass);
+  setEventListeners(formList, config, config.disabledButtonClass, config.errorClassTemplate, config.activeErrorClass);
 }
 
 const validationConfig = {
@@ -95,9 +91,7 @@ const validationConfig = {
   submitButtonSelector: '.popup__button',
   disabledButtonClass: 'popup__button_disabled',
   errorClassTemplate: '.popup__input-error_type_',
-  inputClassTemplate: '.popup__input_type_',
-  activeErrorClass: 'popup__input-error_active',
-  invalidInputClass: 'popup__input_invalid'
+  activeErrorClass: 'popup__input-error_active'
 };
 
 enableValidation(validationConfig);

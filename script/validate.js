@@ -61,7 +61,7 @@ function toggleButtonState(submitButton, disabledButtonClass, inputList) {
 
 // Функция добавления слушателя на форму и на поля ввода в форме
 
-function setEventListeners(formList, config, disabledButtonClass, errorClassTemplate, activeErrorClass, invalidInputClass) {
+function setEventListeners(formList, config) {
 
   formList.forEach(function (form) {
     form.addEventListener('submit', function (event) {
@@ -73,8 +73,8 @@ function setEventListeners(formList, config, disabledButtonClass, errorClassTemp
 
     inputList.forEach(function (input) {
       input.addEventListener('input', function () {
-        checkInputValidity(input, errorClassTemplate, activeErrorClass, invalidInputClass);
-        toggleButtonState(submitButton, disabledButtonClass, inputList);
+        checkInputValidity(input, config.errorClassTemplate, config.activeErrorClass, config.invalidInputClass);
+        toggleButtonState(submitButton, config.disabledButtonClass, inputList);
       });
     });
   });
@@ -85,7 +85,7 @@ function setEventListeners(formList, config, disabledButtonClass, errorClassTemp
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
 
-  setEventListeners(formList, config, config.disabledButtonClass, config.errorClassTemplate, config.activeErrorClass, config.invalidInputClass);
+  setEventListeners(formList, config);
 }
 
 const validationConfig = {

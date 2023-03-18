@@ -87,24 +87,26 @@ closeButtons.forEach((button) => {
 
 // Закрытие модальных окон по кнопке ESCAPE
 
+
+
 function closePopupByEscape(event) {
 
-  popupList.forEach(function (popup) {
-    if (event.key === "Escape") {
-      closePopup(popup);
-    }
-  });
-};
+  const popupOpened = document.querySelector('.popup_opened');
+
+  if (event.key === "Escape") {
+    closePopup(popupOpened);
+  }
+}
 
 // Закрытие модальных окон по клику на OVERLAY
 
 document.addEventListener('click', function (event) {
 
-  popupList.forEach(function (popup) {
-    if (event.target === popup) {
-      closePopup(popup);
-    }
-  });
+  const popupOpened = document.querySelector('.popup_opened');
+
+  if (event.target === popupOpened) {
+    closePopup(popupOpened);
+  }
 });
 
 // Функция очистки формы

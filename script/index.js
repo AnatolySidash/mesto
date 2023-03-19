@@ -36,6 +36,7 @@ const popupName = popupOpenImage.querySelector('.popup__name');
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupByEscape);
+  document.addEventListener('click', closePopupByOverlay);
 }
 
 // Функция закрытия модального окна
@@ -43,6 +44,7 @@ function openPopup(popup) {
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupByEscape);
+  document.removeEventListener('click', closePopupByOverlay);
 }
 
 // Функция изменения имени пользователя и описания профессии пользователя
@@ -87,27 +89,24 @@ closeButtons.forEach((button) => {
 
 // Закрытие модальных окон по кнопке ESCAPE
 
-
-
 function closePopupByEscape(event) {
 
-  const popupOpened = document.querySelector('.popup_opened');
-
   if (event.key === "Escape") {
+    const popupOpened = document.querySelector('.popup_opened');
     closePopup(popupOpened);
   }
 }
 
 // Закрытие модальных окон по клику на OVERLAY
 
-document.addEventListener('click', function (event) {
+function closePopupByOverlay(event) {
 
   const popupOpened = document.querySelector('.popup_opened');
 
   if (event.target === popupOpened) {
     closePopup(popupOpened);
   }
-});
+}
 
 // Функция очистки формы
 

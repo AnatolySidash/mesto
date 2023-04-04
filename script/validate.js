@@ -82,7 +82,7 @@ function setEventListeners(formList, config) {
 
 // Функция включения валидации формы
 
-function enableValidation(config) {
+export function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
 
   setEventListeners(formList, config);

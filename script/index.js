@@ -1,3 +1,6 @@
+import { Card } from './card.js';
+import { enableValidation } from './validate.js';
+
 // Константы
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
@@ -28,8 +31,6 @@ const closeButtons = document.querySelectorAll('.popup__close');
 const popupList = document.querySelectorAll('.popup');
 const popupPhoto = popupOpenImage.querySelector('.popup__photo');
 const popupName = popupOpenImage.querySelector('.popup__name');
-
-
 
 // Функция открытия модального окна
 
@@ -133,45 +134,45 @@ formElement.addEventListener('submit', handleFormSubmit);   // Вызываем 
 
 
 
-function createCard(item) {
-  const card = template.cloneNode(true);
-  const likeButton = card.querySelector('.elements__like-icon');
-  const deleteButton = card.querySelector('.elements__delete-icon');
-  const cardImage = card.querySelector('.elements__image');
+// function createCard(item) {
+//   const card = template.cloneNode(true);
+//   const likeButton = card.querySelector('.elements__like-icon');
+//   const deleteButton = card.querySelector('.elements__delete-icon');
+//   const cardImage = card.querySelector('.elements__image');
 
-  card.querySelector('.elements__title').textContent = item.name;
-  cardImage.src = item.link;
-  cardImage.alt = item.name;
+//   card.querySelector('.elements__title').textContent = item.name;
+//   cardImage.src = item.link;
+//   cardImage.alt = item.name;
 
-  likeButton.addEventListener('click', function () {
-    likeButton.classList.toggle('elements__like-icon_active');
-  });
+//   likeButton.addEventListener('click', function () {
+//     likeButton.classList.toggle('elements__like-icon_active');
+//   });
 
-  deleteButton.addEventListener('click', function () {
-    card.remove();
-  });
+//   deleteButton.addEventListener('click', function () {
+//     card.remove();
+//   });
 
-  cardImage.addEventListener('click', function () {
-    popupPhoto.src = item.link;
-    popupPhoto.alt = item.name;
-    popupName.textContent = item.name;
+//   cardImage.addEventListener('click', function () {
+//     popupPhoto.src = item.link;
+//     popupPhoto.alt = item.name;
+//     popupName.textContent = item.name;
 
-    openPopup(popupOpenImage);
-  });
+//     openPopup(popupOpenImage);
+//   });
 
-  return card;
-}
+//   return card;
+// }
 
 // Функция добавления карточек из массива
 
-function renderCards() {
-  const cards = initialCards.map(function (item) {
-    return createCard(item);
-  });
-  cardList.append(...cards);
-}
+// function renderCards() {
+//   const cards = initialCards.map(function (item) {
+//     return createCard(item);
+//   });
+//   cardList.append(...cards);
+// }
 
-renderCards();
+// renderCards();
 
 // Добавление новой карточки на страницу
 

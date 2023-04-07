@@ -1,17 +1,37 @@
-import { initialCards } from './cards.js';
-
 export class Card {
-  constructor(name, link, likeButton, deleteButton) {
+  constructor(name, link, templateSelector, handleImageClick) {
     this._name = name;
     this._link = link;
-    this._likeButton = likeButton;
-    this._deleteButton = deleteButton;
+    this._templateSelector = templateSelector;
+    this._handleImageClick = handleImageClick;
   }
 
   _getTemplate() {
-    const cardElement = document.querySelector('#card-template').content.querySelector('.elements__item').cloneNode(true);
+    const cardElement = document.querySelector(this._templateSelector).content.querySelector('.elements__item').cloneNode(true);
 
     return cardElement;
+  }
+
+  _handleCardLike() {
+    this._element.querySelector('.elements__like-icon').classList.toggle('elements__like-icon_active');
+  }
+
+  _handleCardDelete() {
+    this._element.remove();
+  }
+
+  _setEventListeners() {
+    this._element.querySelector('.elements__like-icon').addEventListener('click', () => {
+      this._handleCardLike();
+    });
+
+    this._element.querySelector('.elements__delete-icon').addEventListener('click', () => {
+      this._handleCardDelete();
+    });
+
+    this._element.querySelector('.elements__image').addEventListener('click', () => {
+      this._handleImageClick(this._link);
+    });
   }
 
   generateCard() {
@@ -24,23 +44,8 @@ export class Card {
     return this._element;
   }
 
-  _setEventListeners() {
-    this._element.querySelector('.elements__like-icon').addEventListener('click', () => {
-      this._element.querySelector('.elements__like-icon').classList.toggle('elements__like-icon_active');
-    });
-
-    this._element.querySelector('.elements__delete-icon').addEventListener('click', () => {
-      this._element.remove();
-    });
-  }
 }
 
-initialCards.forEach((item) => {
-  const card = new Card(item.name, item.link, item.likeButton, item.deleteButton);
-  const cardElement = card.generateCard();
-  const cardList = document.querySelector('.elements__list');
-  cardList.append(cardElement);
 
-});
 
 

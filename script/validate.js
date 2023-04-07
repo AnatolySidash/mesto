@@ -1,3 +1,5 @@
+import { validationConfig } from './validationConfig.js';
+
 // Функция включения демонстрации типа ошибки
 
 function showInputError(errorElement, validationMessage, activeErrorClass, input, invalidInputClass) {
@@ -28,14 +30,14 @@ function checkInputValidity(input, errorClassTemplate, activeErrorClass, invalid
 
 // Функция деактивации кнопки
 
-function disableButton(submitButton, disabledButtonClass) {
+export function disableButton(submitButton, disabledButtonClass) {
   submitButton.classList.add(disabledButtonClass);
   submitButton.disabled = true;
 }
 
 // Функция активации кнопки
 
-function enableButton(submitButton, disabledButtonClass) {
+export function enableButton(submitButton, disabledButtonClass) {
   submitButton.classList.remove(disabledButtonClass);
   submitButton.disabled = false;
 }
@@ -87,15 +89,5 @@ export function enableValidation(config) {
 
   setEventListeners(formList, config);
 }
-
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  disabledButtonClass: 'popup__button_disabled',
-  errorClassTemplate: '.popup__input-error_type_',
-  activeErrorClass: 'popup__input-error_active',
-  invalidInputClass: 'popup__input_invalid',
-};
 
 enableValidation(validationConfig);

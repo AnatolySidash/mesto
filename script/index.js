@@ -2,7 +2,6 @@ import { Card } from './Card.js';
 import { initialCards } from './cards.js';
 import { validationConfig } from './validationConfig.js';
 import { FormValidator } from './FormValidator.js';
-import { disableButton } from './validate.js';
 
 // Константы
 
@@ -15,28 +14,27 @@ const popupOpenImage = document.querySelector('.popup_type_image');
 const formElement = document.querySelector('.popup__form');
 const profileForm = document.querySelector('.popup__form_type_edit');
 const cardForm = document.querySelector('.popup__form_type_add');
-const inputElement = formElement.querySelector('.popup__input');
+// const inputElement = formElement.querySelector('.popup__input');
 const formAddCard = popupAddCard.querySelector('.popup__form');
 const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__description');
 
-const template = document.querySelector('#card-template').content.querySelector('.elements__item');
+// const template = document.querySelector('#card-template').content.querySelector('.elements__item');
 const cardList = document.querySelector('.elements__list');
-const cardTitle = document.querySelector('.elements__title');
-const cardImage = document.querySelector('.elements__image');
+// const cardTitle = document.querySelector('.elements__title');
+// const cardImage = document.querySelector('.elements__image');
 const cardNameInput = popupAddCard.querySelector('.popup__input_type_name');
 const cardImageLink = popupAddCard.querySelector('.popup__input_type_job');
 const config = validationConfig;
-const submitEditButton = document.querySelector('.popup__button_type_edit');
-const submitAddButton = document.querySelector('.popup__button_type_add');
+// const submitEditButton = document.querySelector('.popup__button_type_edit');
+// const submitAddButton = document.querySelector('.popup__button_type_add');
 
 const closeButtons = document.querySelectorAll('.popup__close');
-const popupList = document.querySelectorAll('.popup');
+// const popupList = document.querySelectorAll('.popup');
 const popupPhoto = popupOpenImage.querySelector('.popup__photo');
 const popupName = popupOpenImage.querySelector('.popup__name');
-
 
 
 // Функция открытия модального окна
@@ -70,7 +68,7 @@ buttonEditProfile.addEventListener('click', function (event) {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(popupEditProfile);
-  disableButton(submitEditButton, config.disabledButtonClass);
+  profileFormValidator.disableButton();
   resetForm(profileForm);
 });
 
@@ -79,7 +77,7 @@ buttonEditProfile.addEventListener('click', function (event) {
 buttonAddCard.addEventListener('click', function (event) {
   openPopup(popupAddCard);
   cardForm.reset();
-  disableButton(submitAddButton, config.disabledButtonClass);
+  newCardFormValidator.disableButton();
   resetForm(cardForm);
 });
 
@@ -131,7 +129,6 @@ function resetForm(form) {
   });
 }
 
-
 // Передача новых данных в профиль
 
 formElement.addEventListener('submit', handleFormSubmit);   // Вызываем функцию изменения информации пользователя по событию отправки формы, т.е. по клику на кнопку "Сохранить"
@@ -150,6 +147,8 @@ formAddCard.addEventListener('submit', function (event) {
   event.target.reset();
 });
 
+// Открытие попапа карточки
+
 function openImageCard(link, name) {
   popupPhoto.src = link;
   popupPhoto.alt = name;
@@ -158,9 +157,18 @@ function openImageCard(link, name) {
   openPopup(popupOpenImage);
 }
 
+// Вставка карточек на страницу из массива
+
 initialCards.forEach((item) => {
   const card = new Card(item.name, item.link, '#card-template', openImageCard);
   const cardElement = card.generateCard();
   cardList.append(cardElement);
 });
 
+// Валидация форм
+
+const profileFormValidator = new FormValidator(config, profileForm);
+const newCardFormValidator = new FormValidator(config, cardForm);
+
+profileFormValidator.enableValidation();
+newCardFormValidator.enableValidation();

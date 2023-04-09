@@ -8,6 +8,19 @@ export class FormValidator {
     this._submitButton = this._form.querySelector(this._config.submitButtonSelector);
   }
 
+  resetValidation() {
+    this._toggleButtonState();
+    this.disableButton();
+
+    this._inputList.forEach((input) => {
+      const errorElement = this._form.querySelector(`${this._config.errorClassTemplate}${input.name}`);
+      errorElement.textContent = '';
+      input.classList.remove('.popup__input-error');
+      input.classList.remove(this._config.invalidInputClass);
+      input.textContent = '';
+    });
+  }
+
   // Метод включения демонстрации типа ошибки
 
   _showInputError(errorElement, input) {

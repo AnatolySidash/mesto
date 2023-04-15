@@ -2,6 +2,9 @@ import { Card } from './Card.js';
 import { initialCards } from './cards.js';
 import { validationConfig } from './validationConfig.js';
 import { FormValidator } from './FormValidator.js';
+import { Section } from './Section.js';
+import { Popup } from './Popup.js';
+import { PopupWithImage } from './PopupWithImage.js';
 
 // Константы
 
@@ -32,19 +35,29 @@ const popupName = popupOpenImage.querySelector('.popup__name');
 
 // Функция открытия модального окна
 
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupByEscape);
-  document.addEventListener('click', closePopupByOverlay);
-}
+// function openPopup(popup) {
+//   popup.classList.add('popup_opened');
+//   document.addEventListener('keydown', closePopupByEscape);
+//   document.addEventListener('click', closePopupByOverlay);
+// }
 
 // Функция закрытия модального окна
 
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupByEscape);
-  document.removeEventListener('click', closePopupByOverlay);
-}
+// function closePopup(popup) {
+//   popup.classList.remove('popup_opened');
+//   document.removeEventListener('keydown', closePopupByEscape);
+//   document.removeEventListener('click', closePopupByOverlay);
+// }
+
+// Закрытие модальных окон по кнопке ESCAPE
+
+// function closePopupByEscape(event) {
+
+//   if (event.key === "Escape") {
+//     const popupOpened = document.querySelector('.popup_opened');
+//     closePopup(popupOpened);
+//   }
+// }
 
 // Функция изменения имени пользователя и описания профессии пользователя
 
@@ -57,7 +70,7 @@ function handleFormSubmit(event) {
 
 // Открытие модального окна редактирования профиля
 
-buttonEditProfile.addEventListener('click', function (event) {
+buttonEditProfile.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(popupEditProfile);
@@ -66,7 +79,7 @@ buttonEditProfile.addEventListener('click', function (event) {
 
 // Открытие модального окна добавления карточки
 
-buttonAddCard.addEventListener('click', function (event) {
+buttonAddCard.addEventListener('click', function () {
   openPopup(popupAddCard);
   newCardFormValidator.resetValidation();
   cardForm.reset();
@@ -74,36 +87,26 @@ buttonAddCard.addEventListener('click', function (event) {
 
 // Закрытие модальных окон по нажатию на крестик
 
-closeButtons.forEach((button) => {
-  // находим 1 раз ближайший к крестику попап
-  const popup = button.closest('.popup');
-  // устанавливаем обработчик закрытия на крестик
-  button.addEventListener('click', function () {
-    closePopup(popup);
-  });
+// closeButtons.forEach((button) => {
+//   // находим 1 раз ближайший к крестику попап
+//   const popup = button.closest('.popup');
+//   // устанавливаем обработчик закрытия на крестик
+//   button.addEventListener('click', function () {
+//     closePopup(popup);
+//   });
+// });
 
-});
-
-// Закрытие модальных окон по кнопке ESCAPE
-
-function closePopupByEscape(event) {
-
-  if (event.key === "Escape") {
-    const popupOpened = document.querySelector('.popup_opened');
-    closePopup(popupOpened);
-  }
-}
 
 // Закрытие модальных окон по клику на OVERLAY
 
-function closePopupByOverlay(event) {
+// function closePopupByOverlay(event) {
 
-  const popupOpened = document.querySelector('.popup_opened');
+//   const popupOpened = document.querySelector('.popup_opened');
 
-  if (event.target === popupOpened) {
-    closePopup(popupOpened);
-  }
-}
+//   if (event.target === popupOpened) {
+//     closePopup(popupOpened);
+//   }
+// }
 
 // Передача новых данных в профиль
 
@@ -112,11 +115,11 @@ formElement.addEventListener('submit', handleFormSubmit);   // Вызываем 
 
 // Создание новой карточки
 
-function createCard(name, link) {
-  const card = new Card(name, link, '#card-template', openImageCard);
-  const cardElement = card.generateCard();
-  return cardElement;
-}
+// function createCard(name, link) {
+//   const card = new Card(name, link, '#card-template', openImageCard);
+//   const cardElement = card.generateCard();
+//   return cardElement;
+// }
 
 // Добавление новой карточки на страницу
 
@@ -133,18 +136,17 @@ formAddCard.addEventListener('submit', function (event) {
 // Открытие попапа карточки
 
 function openImageCard(link, name) {
-  popupPhoto.src = link;
-  popupPhoto.alt = name;
-  popupName.textContent = name;
-
-  openPopup(popupOpenImage);
+  const popupImage = new PopupWithImage('.popup_type_image', link, name);
+  popupImage.open();
+  popupImage.setEventListeners();
 }
+
 
 // Вставка карточек на страницу из массива
 
-initialCards.forEach((item) => {
-  cardList.append(createCard(item.name, item.link));
-});
+// initialCards.forEach((item) => {
+//   cardList.append(createCard(item.name, item.link));
+// });
 
 // Валидация форм
 
@@ -153,3 +155,17 @@ const newCardFormValidator = new FormValidator(config, cardForm);
 
 profileFormValidator.enableValidation();
 newCardFormValidator.enableValidation();
+
+// Вставка карточек на страницу из массива
+
+const section = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item.name, item.link, '#card-template', openImageCard);
+    const cardElement = card.generateCard();
+    section.addItem(cardElement);
+  }
+}, '.elements__list');
+
+section.renderItems();
+

@@ -3,8 +3,8 @@ import { initialCards } from './cards.js';
 import { validationConfig } from './validationConfig.js';
 import { FormValidator } from './FormValidator.js';
 import { Section } from './Section.js';
-import { Popup } from './Popup.js';
 import { PopupWithImage } from './PopupWithImage.js';
+import { PopupWithForm } from './PopupWithForm.js';
 
 // Константы
 
@@ -80,10 +80,20 @@ buttonEditProfile.addEventListener('click', function () {
 // Открытие модального окна добавления карточки
 
 buttonAddCard.addEventListener('click', function () {
-  openPopup(popupAddCard);
+  const popupAddCard = new PopupWithForm('.popup_type_add', addNewCard);
+  popupAddCard.open();
+  popupAddCard.setEventListeners();
   newCardFormValidator.resetValidation();
-  cardForm.reset();
 });
+
+function addNewCard() {
+
+  const name = cardNameInput.value;
+  const link = cardImageLink.value;
+  cardList.prepend(createCard(name, link));
+  closePopup(popupAddCard);
+}
+
 
 // Закрытие модальных окон по нажатию на крестик
 
@@ -123,15 +133,8 @@ formElement.addEventListener('submit', handleFormSubmit);   // Вызываем 
 
 // Добавление новой карточки на страницу
 
-formAddCard.addEventListener('submit', function (event) {
-  event.preventDefault();
 
-  const name = cardNameInput.value;
-  const link = cardImageLink.value;
-  cardList.prepend(createCard(name, link));
-  closePopup(popupAddCard);
-  event.target.reset();
-});
+
 
 // Открытие попапа карточки
 

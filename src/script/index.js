@@ -6,32 +6,20 @@ import { Section } from './Section.js';
 import { PopupWithImage } from './PopupWithImage.js';
 import { PopupWithForm } from './PopupWithForm.js';
 import { UserInfo } from './UserInfo.js';
+import '../pages/index.css';
 
 // Константы
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonAddCard = document.querySelector('.profile__add-button');
-const popupEditProfile = document.querySelector('.popup_type_edit');
-const popupAddCard = document.querySelector('.popup_type_add');
-const popupOpenImage = document.querySelector('.popup_type_image');
-
 const formElement = document.querySelector('.popup__form');
 const profileForm = document.querySelector('.popup__form_type_edit');
 const cardForm = document.querySelector('.popup__form_type_add');
-const formAddCard = popupAddCard.querySelector('.popup__form');
 const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__description');
-
-const cardList = document.querySelector('.elements__list');
-const cardNameInput = popupAddCard.querySelector('.popup__input_type_name');
-const cardImageLink = popupAddCard.querySelector('.popup__input_type_job');
 const config = validationConfig;
-
-const closeButtons = document.querySelectorAll('.popup__close');
-const popupPhoto = popupOpenImage.querySelector('.popup__photo');
-const popupName = popupOpenImage.querySelector('.popup__name');
 
 
 const userData = new UserInfo({

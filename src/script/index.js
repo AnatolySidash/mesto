@@ -1,6 +1,6 @@
 import { Card } from './Card.js';
-import { initialCards } from './cards.js';
-import { validationConfig } from './validationConfig.js';
+import { initialCards } from '../utils/cards.js';
+import { validationConfig } from '../utils/validationConfig.js';
 import { FormValidator } from './FormValidator.js';
 import { Section } from './Section.js';
 import { PopupWithImage } from './PopupWithImage.js';
@@ -30,9 +30,7 @@ const userData = new UserInfo({
 // Открытие попапа карточки
 
 function openImageCard(name, link) {
-  const popupImage = new PopupWithImage('.popup_type_image', name, link);
-  popupImage.open();
-  popupImage.setEventListeners();
+  popupImage.open(name, link);
 }
 
 // Создание новой карточки
@@ -63,7 +61,6 @@ buttonEditProfile.addEventListener('click', () => {
   jobInput.value = currentUserData.userJob;
 
   profilePopup.open();
-  profilePopup.setEventListeners();
   profileFormValidator.resetValidation();
 });
 
@@ -78,7 +75,6 @@ const profilePopup = new PopupWithForm({
   }
 });
 
-
 const newCardPopup = new PopupWithForm({
   popupSelector: '.popup_type_add',
   handleFormSubmit: (item) => {
@@ -87,16 +83,18 @@ const newCardPopup = new PopupWithForm({
   }
 });
 
-
 // Открытие модального окна добавления карточки
 
 buttonAddCard.addEventListener('click', () => {
-
   newCardPopup.open();
-  newCardPopup.setEventListeners();
   newCardFormValidator.resetValidation();
 });
 
+const popupImage = new PopupWithImage('.popup_type_image');
+
+popupImage.setEventListeners();
+profilePopup.setEventListeners();
+newCardPopup.setEventListeners();
 
 // Валидация форм
 

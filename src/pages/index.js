@@ -1,11 +1,11 @@
-import { Card } from './Card.js';
+import { Card } from '../components/Card.js';
 import { initialCards } from '../utils/cards.js';
 import { validationConfig } from '../utils/validationConfig.js';
-import { FormValidator } from './FormValidator.js';
-import { Section } from './Section.js';
-import { PopupWithImage } from './PopupWithImage.js';
-import { PopupWithForm } from './PopupWithForm.js';
-import { UserInfo } from './UserInfo.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { Section } from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
 import '../pages/index.css';
 
 // Константы
@@ -67,10 +67,10 @@ buttonEditProfile.addEventListener('click', () => {
 
 const profilePopup = new PopupWithForm({
   popupSelector: '.popup_type_edit',
-  handleFormSubmit: () => {
+  handleFormSubmit: (inputValueData) => {
     userData.setUserInfo({
-      userName: nameInput.value,
-      userJob: jobInput.value
+      userName: inputValueData.name,
+      userJob: inputValueData.job
     });
   }
 });

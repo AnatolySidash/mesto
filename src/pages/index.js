@@ -6,6 +6,7 @@ import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
+import { Api } from '../components/Api.js';
 import '../pages/index.css';
 
 // Константы
@@ -19,7 +20,38 @@ const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_job');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__description');
+const profileAvatar = document.querySelector('.profile__avatar');
 const config = validationConfig;
+
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-65',
+  headers: {
+    authorization: '46ca9225-5df7-4ceb-a9c3-33677b40d8c1',
+    'Content-Type': 'application/json'
+  }
+});
+
+// Вставка карточек на страницу из сервера
+
+api.getInitialCards().then((data) => {
+  const section = new Section({
+    items: data,
+    renderer: (item) => {
+      section.addItem(createCard(item));
+    }
+  }, '.elements__list');
+  section.renderItems(data);
+});
+
+// Вставка данных в профиль из сервера
+
+api.getUserInfo().then((data) => {
+  profileName.textContent = data.name;
+  profileJob.textContent = data.about;
+  profileAvatar.src = data.avatar;
+});
+
 
 
 const userData = new UserInfo({
@@ -50,7 +82,7 @@ const section = new Section({
   }
 }, '.elements__list');
 
-section.renderItems();
+
 
 
 // Открытие модального окна редактирования профиля

@@ -7,7 +7,7 @@
     "dev": "webpack serve",
     "build": "webpack --mode production",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist -r https://github.com/AnatolySidash/mesto.git"
   },
   "repository": {
     "type": "git",

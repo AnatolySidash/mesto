@@ -17,10 +17,10 @@
   <main class="content">
     <section class="profile">
       <div class="profile__block">
-        <img src="<%=require('./images/02_profile/avatar.jpg')%>" alt="Фотография пользователя" class="profile__avatar">
+        <img alt="Фотография пользователя" class="profile__avatar">
         <div class="profile__content">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <p class="profile__description">Исследователь океана</p>
+          <h1 class="profile__name"></h1>
+          <p class="profile__description"></p>
           <button type="button" class="profile__edit-button"></button>
         </div>
       </div>
@@ -71,6 +71,29 @@
       <button type="button" class="popup__close"></button>
       <img class="popup__photo">
       <h3 class="popup__name"></h3>
+    </div>
+  </section>
+
+  <section class="popup popup_type_delete">
+    <div class="popup__container">
+      <button type="button" class="popup__close"></button>
+      <h2 class="popup__title">Вы уверены?</h2>
+      <form name="card_form" class="popup__form popup__form_type_add">
+        <button class="popup__button popup__button_type_add">Да</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="popup popup_type_avatar">
+    <div class="popup__container">
+      <button type="button" class="popup__close"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form name="card_form" class="popup__form popup__form_type_add" novalidate>
+        <input id="link__input" name="link" type="url" class="popup__input popup__input_type_job"
+          placeholder="Ссылка на картинку" value="" required>
+        <span class="popup__input-error popup__input-error_type_link"></span>
+        <button type="submit" class="popup__button popup__button_type_add">Сохранить</button>
+      </form>
     </div>
   </section>
 

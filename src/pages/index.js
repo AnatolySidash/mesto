@@ -52,8 +52,6 @@ api.getUserInfo().then((data) => {
   profileAvatar.src = data.avatar;
 });
 
-
-
 const userData = new UserInfo({
   userNameSelector: profileName,
   userDataSelector: profileJob
@@ -83,8 +81,6 @@ const section = new Section({
 }, '.elements__list');
 
 
-
-
 // Открытие модального окна редактирования профиля
 
 buttonEditProfile.addEventListener('click', () => {
@@ -96,22 +92,24 @@ buttonEditProfile.addEventListener('click', () => {
   profileFormValidator.resetValidation();
 });
 
-
 const profilePopup = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   handleFormSubmit: (inputValueData) => {
-    userData.setUserInfo({
-      userName: inputValueData.name,
-      userJob: inputValueData.job
+    api.editProfile(inputValueData).then((data) => {
+      userData.setUserInfo({
+        userName: inputValueData.name,
+        userJob: inputValueData.job
+      });
     });
   }
 });
 
 const newCardPopup = new PopupWithForm({
   popupSelector: '.popup_type_add',
-  handleFormSubmit: (item) => {
-    const newCard = createCard(item);
-    section.addItem(newCard);
+  handleFormSubmit: (inputValueData) => {
+    api.addNewCard(inputValueData).then((data) => {
+      section.addItem(createCard(data));
+    });
   }
 });
 

@@ -97,4 +97,56 @@ export class Api {
         console.error(err);
       });
   }
+
+  changeAvatar({ link }) {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-65/users/me/avatar', {
+      method: "PATCH",
+      headers: {
+        authorization: '46ca9225-5df7-4ceb-a9c3-33677b40d8c1',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "avatar": link,
+      })
+    })
+      .then(res => {
+        if (!res.ok) {
+          return Promise.reject(`Ошибка: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
 }
+
+  // deleteCard( id ) {
+  //   return fetch(`https://mesto.nomoreparties.co/v1/cohortId/cards/${id}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       authorization: '46ca9225-5df7-4ceb-a9c3-33677b40d8c1',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //       "id": id,
+  //     })
+  //   })
+  //     .then(res => {
+  //       if (!res.ok) {
+  //         return Promise.reject(`Ошибка: ${res.status}`);
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       return data;
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
+

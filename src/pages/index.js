@@ -66,7 +66,7 @@ function openImageCard(name, link) {
 // Создание новой карточки
 
 const createCard = (item) => {
-  const card = new Card(item.name, item.link, '#card-template', openImageCard);
+  const card = new Card(item.name, item.link, item.likes, item.owner._id, '#card-template', openImageCard);
   const cardElement = card.generateCard();
   return cardElement;
 };
@@ -113,6 +113,20 @@ const newCardPopup = new PopupWithForm({
   }
 });
 
+const avatarPopup = new PopupWithForm({
+  popupSelector: '.popup_type_avatar',
+  handleFormSubmit: (inputValueData) => {
+    api.changeAvatar(inputValueData).then((data) => {
+      profileAvatar.src = data.avatar;
+    });
+  }
+});
+
+profileAvatar.addEventListener('click', () => {
+  avatarPopup.open();
+});
+
+
 // Открытие модального окна добавления карточки
 
 buttonAddCard.addEventListener('click', () => {
@@ -125,6 +139,7 @@ const popupImage = new PopupWithImage('.popup_type_image');
 popupImage.setEventListeners();
 profilePopup.setEventListeners();
 newCardPopup.setEventListeners();
+avatarPopup.setEventListeners();
 
 // Валидация форм
 

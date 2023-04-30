@@ -6,6 +6,7 @@
   background: url(../../../images/03_elements/like.svg) center no-repeat;
   cursor: pointer;
   transition: opacity .3s ease-in-out;
+  margin-bottom: 3px;
 }
 
 .elements__like-icon:hover {

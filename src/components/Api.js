@@ -46,6 +46,7 @@ export class Api {
   }
 
   editProfile({ name, job }) {
+    this._editButtonLoading(true);
     return fetch('https://mesto.nomoreparties.co/v1/cohort-65/users/me', {
       method: "PATCH",
       headers: {
@@ -68,11 +69,15 @@ export class Api {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        this._editButtonLoading(false);
       });
   }
 
 
   addNewCard({ name, link }) {
+    this._addButtonLoading(true);
     return fetch('https://mesto.nomoreparties.co/v1/cohort-65/cards', {
       method: "POST",
       headers: {
@@ -95,10 +100,14 @@ export class Api {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        this._addButtonLoading(false);
       });
   }
 
   changeAvatar({ link }) {
+    this._avatarButtonLoading(true);
     return fetch('https://mesto.nomoreparties.co/v1/cohort-65/users/me/avatar', {
       method: "PATCH",
       headers: {
@@ -120,7 +129,37 @@ export class Api {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        this._avatarButtonLoading(false);
       });
+  }
+
+  _editButtonLoading(isLoading) {
+    const editButton = document.querySelector('.popup__button_type_edit');
+    if (isLoading) {
+      editButton.textContent = 'Сохранение...';
+    } else {
+      editButton.textContent = 'Сохранить';
+    }
+  }
+
+  _addButtonLoading(isLoading) {
+    const addButton = document.querySelector('.popup__button_type_add');
+    if (isLoading) {
+      addButton.textContent = 'Создание...';
+    } else {
+      addButton.textContent = 'Создать';
+    }
+  }
+
+  _avatarButtonLoading(isLoading) {
+    const avatarButton = document.querySelector('.popup__button_type_avatar');
+    if (isLoading) {
+      avatarButton.textContent = 'Сохранение...';
+    } else {
+      avatarButton.textContent = 'Сохранить';
+    }
   }
 
 }

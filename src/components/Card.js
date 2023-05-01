@@ -1,12 +1,15 @@
 export class Card {
-  constructor(name, link, like, ownerId, templateSelector, handleImageClick) {
+  constructor(name, link, like, ownerId, userId, cardId, templateSelector, handleImageClick) {
     this._name = name;
     this._link = link;
     this._like = like;
     this._ownerId = ownerId;
+    this._userId = userId;
+    this._cardId = cardId;
     this._templateSelector = templateSelector;
     this._handleImageClick = handleImageClick;
   }
+
 
   _getTemplate() {
     const cardElement = document.querySelector(this._templateSelector).content.querySelector('.elements__item').cloneNode(true);
@@ -31,9 +34,11 @@ export class Card {
       this._handleCardLike();
     });
 
-    this._buttonDelete.addEventListener('click', () => {
-      this._handleCardDelete();
-    });
+    if (this._userId === this._ownerId) {
+      this._buttonDelete.addEventListener('click', () => {
+        this._handleCardDelete();
+      });
+    }
 
     this._elementImage.addEventListener('click', () => {
       this._handleImageClick(this._link, this._name);
@@ -47,9 +52,9 @@ export class Card {
     this._elementImage = this._element.querySelector('.elements__image');
     this._setEventListeners();
 
-    // if (this._ownerId !== 'c685ea26409e45277dfd6630') {
-    //   this._handleDeleteIcon(this._element);
-    // }
+    if (this._userId !== this._ownerId) {
+      this._buttonDelete.remove();
+    }
 
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;

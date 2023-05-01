@@ -34,15 +34,26 @@ const api = new Api({
 
 // Вставка карточек на страницу из сервера
 
-api.getInitialCards().then((data) => {
-  const section = new Section({
-    items: data,
-    renderer: (item) => {
-      section.addItem(createCard(item));
-    }
-  }, '.elements__list');
-  section.renderItems(data);
-});
+// api.getInitialCards().then((cards) => {
+//   const section = new Section({
+//     items: cards,
+//     renderer: (item) => {
+//       section.addItem(createCard(item));
+//     }
+//   }, '.elements__list');
+// });
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([data, items]) => {
+    const userId = data._id;
+    const section = new Section({
+      items: items,
+      renderer: (item) => {
+        section.addItem(createCard(item, userId));
+      }
+    }, '.elements__list');
+    section.renderItems(items);
+  });
 
 // Вставка данных в профиль из сервера
 
@@ -65,20 +76,12 @@ function openImageCard(name, link) {
 
 // Создание новой карточки
 
-const createCard = (item) => {
-  const card = new Card(item.name, item.link, item.likes, item.owner._id, '#card-template', openImageCard);
+const createCard = (item, userId) => {
+
+  const card = new Card(item.name, item.link, item.likes, item.owner._id, userId, item._id, '#card-template', openImageCard);
   const cardElement = card.generateCard();
   return cardElement;
 };
-
-// Вставка карточек на страницу из массива
-
-const section = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    section.addItem(createCard(item));
-  }
-}, '.elements__list');
 
 
 // Открытие модального окна редактирования профиля

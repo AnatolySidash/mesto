@@ -1,0 +1,15 @@
+.profile__avatar-box {
+  position: relative;
+}
+
+
+.profile__avatar-box::after {
+  content: '';
+  position: absolute;
+  top: 47px;
+  left: 47px;
+  background: url(../../../images/02_profile/vector.svg) center no-repeat;
+  width: 26px;
+  height: 26px;
+  z-index: -1;
+}

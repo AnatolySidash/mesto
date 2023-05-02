@@ -1,5 +1,4 @@
 import { Card } from '../components/Card.js';
-import { initialCards } from '../utils/cards.js';
 import { validationConfig } from '../utils/validationConfig.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
@@ -32,16 +31,10 @@ const api = new Api({
   }
 });
 
-// Вставка карточек на страницу из сервера
+let userId;
+api.getUserInfo().then((data) => userId = data._id);
 
-// api.getInitialCards().then((cards) => {
-//   const section = new Section({
-//     items: cards,
-//     renderer: (item) => {
-//       section.addItem(createCard(item));
-//     }
-//   }, '.elements__list');
-// });
+// Вставка карточек на страницу из сервера
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([data, items]) => {
@@ -83,6 +76,11 @@ const createCard = (item, userId) => {
   return cardElement;
 };
 
+const section = new Section({
+  renderer: (item) => {
+    section.addItem(createCard(item, userId));
+  }
+}, '.elements__list');
 
 // Открытие модального окна редактирования профиля
 
@@ -111,7 +109,7 @@ const newCardPopup = new PopupWithForm({
   popupSelector: '.popup_type_add',
   handleFormSubmit: (inputValueData) => {
     api.addNewCard(inputValueData).then((data) => {
-      section.addItem(createCard(data));
+      section.addItem(createCard(data, userId));
     });
   }
 });

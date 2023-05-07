@@ -4,6 +4,7 @@ import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 import '../pages/index.css';
@@ -70,8 +71,7 @@ function openImageCard(name, link) {
 // Создание новой карточки
 
 const createCard = (item, userId) => {
-
-  const card = new Card(item.name, item.link, item.likes, item.owner._id, userId, item._id, '#card-template', openImageCard);
+  const card = new Card(item.name, item.link, item.likes, item.owner._id, userId, item._id, '#card-template', openImageCard, handleCardDelete, handleCardLike);
   const cardElement = card.generateCard();
   return cardElement;
 };
@@ -127,6 +127,34 @@ profileAvatar.addEventListener('click', () => {
   avatarPopup.open();
 });
 
+// Удаление карточки
+
+const handleCardDelete = (card) => {
+
+  const submitConfirm = () => {
+    api.deleteCard(card.cardId).then(() => {
+      card.deleteCard();
+    });
+  };
+  popupForDelete.setAction(submitConfirm);
+  popupForDelete.open();
+};
+
+// Добавление и снятие лайка с карточки
+
+const handleCardLike = (card) => {
+  if (card.isLiked()) {
+    api.removeLike(card.cardId).then((data) => {
+      card.removeLike();
+      card.countLikeQuantity(data);
+    });
+  } else {
+    api.addLike(card.cardId).then((data) => {
+      card.setLike();
+      card.countLikeQuantity(data);
+    });
+  }
+};
 
 // Открытие модального окна добавления карточки
 
@@ -135,12 +163,14 @@ buttonAddCard.addEventListener('click', () => {
   newCardFormValidator.resetValidation();
 });
 
+const popupForDelete = new PopupWithConfirmation('.popup_type_delete');
 const popupImage = new PopupWithImage('.popup_type_image');
 
 popupImage.setEventListeners();
 profilePopup.setEventListeners();
 newCardPopup.setEventListeners();
 avatarPopup.setEventListeners();
+popupForDelete.setEventListeners();
 
 // Валидация форм
 

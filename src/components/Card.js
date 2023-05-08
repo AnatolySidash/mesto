@@ -72,6 +72,10 @@ export class Card {
       this._buttonDelete.remove();
     }
 
+    if (this.isLiked()) {
+      this.setLike();
+    }
+
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;
     this._element.querySelector('.elements__title').textContent = this._name;
